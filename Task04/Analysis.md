@@ -73,3 +73,40 @@ Binary search takes O(log n) time, but inserting new records into a sorted array
 ## 9. Conclusion
 
 The experiment compares the performance and ordering behaviour of HashMap, TreeMap and LinkedHashMap to identify a suitable data structure for medicine inventory management.
+
+## 10. Experimental Results
+
+The program tested three Map implementations using 1,000, 10,000 and 100,000 medicine records.
+
+### Performance Comparison
+
+| Records | HashMap | TreeMap | LinkedHashMap |
+|---|---|---|---|
+| 1,000 | Actual result | Actual result | Actual result |
+| 10,000 | Actual result | Actual result | Actual result |
+| 100,000 | Actual result | Actual result | Actual result |
+
+Replace the values with the average execution times from the Java program.
+
+### Iteration Order Results
+
+- HashMap: No guaranteed ordering.
+- TreeMap: Keys are displayed in sorted order.
+- LinkedHashMap: Keys are displayed in insertion order.
+
+## 11. Performance Analysis
+
+- HashMap is suitable for fast average insertion and lookup.
+- TreeMap is useful when sorted medicine reports are required.
+- LinkedHashMap is useful when insertion order must be maintained.
+- The actual execution times may vary depending on the computer and runtime environment.
+
+## 12. Final Design Decision
+
+HashMap is selected for general medicine inventory storage because it provides efficient average lookup and insertion.
+
+TreeMap is suitable for sorted reports, while LinkedHashMap is suitable for maintaining insertion order.
+
+## 13. Conclusion
+
+The experiment demonstrates that different Map implementations have different ordering and performance characteristics. The appropriate implementation should be selected according to application requirements.
