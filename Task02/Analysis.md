@@ -147,3 +147,30 @@ LinkedList can be useful when insertion and removal occur at the ends or through
 ArrayDeque is suitable for managing the Up Next queue.
 
 The final collection choice will be based on the measured experimental results.
+
+## 14. Engineering Decision and Comparison
+
+### ArrayList vs LinkedList vs ArrayDeque
+
+| Requirement | Recommended Collection | Reason |
+|---|---|---|
+| Normal playlist | ArrayList | Fast indexed access and iteration |
+| Frequent front insertion | LinkedList | Efficient insertion at the beginning |
+| Up Next queue | ArrayDeque | Efficient operations at both ends |
+| Random song access | ArrayList | O(1) indexed access |
+
+### When to Stop Recommending ArrayList
+
+ArrayList becomes less suitable when the application performs frequent insertions and removals at the beginning or middle of a large playlist.
+
+These operations require shifting elements and may increase execution time.
+
+### Final Conclusion
+
+ArrayList is a reasonable engineering choice for normal music playlists because it provides fast random access and efficient iteration.
+
+LinkedList can be considered for workloads with frequent insertions and removals when the required position is already known.
+
+ArrayDeque is preferred for the Up Next queue because it supports efficient insertion and removal at both ends.
+
+The final decision should be supported by the experimental timing results.
