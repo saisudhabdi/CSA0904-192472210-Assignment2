@@ -71,3 +71,34 @@ However, Comparator is more flexible because different ranking rules can be crea
 ## 10. Conclusion
 
 The experiment demonstrates how Java Generics and Comparator can be used to build a reusable leaderboard with multiple ranking conditions.
+
+## 11. Experimental Results
+
+### Correct Comparator
+
+The leaderboard was sorted using three conditions:
+
+1. Points in descending order.
+2. Goal difference in descending order.
+3. Names in alphabetical order.
+
+The output followed all three ranking conditions.
+
+### Faulty Comparator
+
+The faulty comparator considered only points.
+
+Players with equal points were not correctly ordered using goal difference and alphabetical order.
+
+This demonstrated why multiple ranking conditions must be included in a comparator.
+
+## 12. Final Observation
+
+- Generics make the Leaderboard reusable.
+- Comparator supports custom ranking rules.
+- Multiple conditions can be combined using comparison logic.
+- A faulty comparator can produce incorrect rankings.
+
+## 13. Conclusion
+
+The experiment demonstrates how Java Generics and Comparator can create a flexible leaderboard. A correctly designed comparator ensures that all ranking conditions are applied in the required priority.
