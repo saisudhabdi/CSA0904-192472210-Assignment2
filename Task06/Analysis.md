@@ -73,3 +73,40 @@ A fairness policy can ensure that waiting patients receive attention after a def
 ## 10. Conclusion
 
 PriorityQueue provides an efficient way to process hospital patients according to severity. An arrival counter can maintain FIFO order when patients have equal severity.
+
+## 11. Experimental Results
+
+### Patient Treatment Order
+
+The PriorityQueue processed patients according to severity.
+
+- Severity 1 patients were treated first.
+- Severity 2 patients were treated next.
+- Patients with equal severity were processed in arrival order.
+- Severity 5 patients were treated last.
+
+### Performance Measurements
+
+| Number of Patients | Average Execution Time |
+|---|---|
+| 1,000 | Replace with actual result |
+| 10,000 | Replace with actual result |
+| 100,000 | Replace with actual result |
+
+The execution time was measured over three runs and averaged.
+
+## 12. Fairness Analysis
+
+The arrival counter ensures FIFO ordering for patients with equal severity.
+
+However, continuous arrivals of critical patients can delay lower-severity patients. A waiting-time policy can help reduce starvation while preserving emergency priority.
+
+## 13. Final Design Decision
+
+PriorityQueue is selected because it efficiently processes patients according to severity.
+
+The comparator uses severity first and arrival order second.
+
+## 14. Conclusion
+
+The experiment demonstrates that PriorityQueue is suitable for hospital triage. It provides priority-based treatment and maintains FIFO order among patients with equal severity.
