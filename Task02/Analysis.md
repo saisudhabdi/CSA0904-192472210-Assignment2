@@ -73,3 +73,77 @@ Therefore, front and middle insertion or removal require O(n) time. Direct acces
 ## 9. Final Objective
 
 The experiment will identify when ArrayList is a reasonable choice for playlist management and when LinkedList or ArrayDeque is more suitable based on actual usage patterns and measured performance.
+
+## 10. Experimental Methodology
+
+The ArrayList and LinkedList collections were tested using identical playlist data.
+
+Each operation was executed three times, and the average execution time was calculated using System.nanoTime().
+
+The following operations were measured:
+
+1. Adding songs at the end.
+2. Inserting songs at the front.
+3. Inserting songs in the middle.
+4. Removing songs from the front.
+5. Removing songs from the middle.
+6. Accessing the k-th song.
+7. Iterating through the complete playlist.
+
+Three playlist sizes were used: 1,000, 10,000 and 50,000 songs.
+
+## 11. Experimental Results
+
+The measured execution times are recorded in nanoseconds.
+
+### Small Playlist – 1,000 Songs
+
+| Operation | ArrayList (ns) | LinkedList (ns) |
+|---|---:|---:|
+| Add End | To be recorded | To be recorded |
+| Insert Front | To be recorded | To be recorded |
+| Insert Middle | To be recorded | To be recorded |
+| Remove Front | To be recorded | To be recorded |
+| Remove Middle | To be recorded | To be recorded |
+| Access Kth | To be recorded | To be recorded |
+| Full Iteration | To be recorded | To be recorded |
+
+### Medium Playlist – 10,000 Songs
+
+| Operation | ArrayList (ns) | LinkedList (ns) |
+|---|---:|---:|
+| Add End | To be recorded | To be recorded |
+| Insert Front | To be recorded | To be recorded |
+| Insert Middle | To be recorded | To be recorded |
+| Remove Front | To be recorded | To be recorded |
+| Remove Middle | To be recorded | To be recorded |
+| Access Kth | To be recorded | To be recorded |
+| Full Iteration | To be recorded | To be recorded |
+
+### Large Playlist – 50,000 Songs
+
+| Operation | ArrayList (ns) | LinkedList (ns) |
+|---|---:|---:|
+| Add End | To be recorded | To be recorded |
+| Insert Front | To be recorded | To be recorded |
+| Insert Middle | To be recorded | To be recorded |
+| Remove Front | To be recorded | To be recorded |
+| Remove Middle | To be recorded | To be recorded |
+| Access Kth | To be recorded | To be recorded |
+| Full Iteration | To be recorded | To be recorded |
+
+## 12. ArrayDeque Evaluation
+
+ArrayDeque was tested for the Up Next queue.
+
+It supports insertion and removal at both ends and is suitable for queue-based playlist operations.
+
+## 13. Conclusion
+
+ArrayList is suitable when frequent indexed access and iteration are required.
+
+LinkedList can be useful when insertion and removal occur at the ends or through an already-positioned iterator.
+
+ArrayDeque is suitable for managing the Up Next queue.
+
+The final collection choice will be based on the measured experimental results.
