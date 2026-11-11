@@ -7,11 +7,11 @@ class Patient {
     int arrivalOrder;
     int arrivalTime;
 
-    Patient(String name, int severity, int arrivalOrder) {
+    Patient(String name, int severity, int order, int time) {
         this.name = name;
         this.severity = severity;
-        this.arrivalOrder = arrivalOrder;
-        this.arrivalTime = 0;
+        this.arrivalOrder = order;
+        this.arrivalTime = time;
     }
 }
 
@@ -20,116 +20,110 @@ public class Main {
     static List<Patient> createPatients() {
         List<Patient> patients = new ArrayList<>();
 
-        patients.add(new Patient("Arun", 5, 1));
-        patients.add(new Patient("Bala", 1, 2));
-        patients.add(new Patient("Kiran", 4, 3));
-        patients.add(new Patient("David", 2, 4));
-        patients.add(new Patient("Ravi", 5, 5));
-        patients.add(new Patient("John", 3, 6));
-        patients.add(new Patient("Sam", 1, 7));
-        patients.add(new Patient("Rahul", 4, 8));
+        patients.add(new Patient("Ari", 5, 1, 0));
+        patients.add(new Patient("Bea", 5, 2, 0));
+        patients.add(new Patient("Chen", 4, 3, 0));
+        patients.add(new Patient("Dina", 2, 4, 0));
+        patients.add(new Patient("Evan", 2, 5, 1));
+        patients.add(new Patient("Farah", 2, 6, 2));
+        patients.add(new Patient("Gopal", 2, 7, 3));
+        patients.add(new Patient("Hari", 2, 8, 4));
+        patients.add(new Patient("Isha", 2, 9, 5));
+        patients.add(new Patient("Emergency", 1, 10, 3));
 
         return patients;
     }
 
-    static void runOriginal() {
-        PriorityQueue<Patient> queue =
-            new PriorityQueue<>(
-                Comparator.comparingInt((Patient p) -> p.severity)
-                    .thenComparingInt(p -> p.arrivalOrder)
-            );
+    static void runSystem(boolean aging) {
 
-        queue.addAll(createPatients());
+        List<Patient> waiting = createPatients();
+        List<Patient> available = new ArrayList<>();
 
-        System.out.println("ORIGINAL TRIAGE SYSTEM");
-        System.out.println("----------------------");
-
-        int currentTime = 0;
+        int time = 0;
         int totalWaiting = 0;
+        int maximumWaiting = 0;
 
-        while (!queue.isEmpty()) {
-            Patient p = queue.poll();
+        System.out.println(aging
+            ? "\nREDESIGNED TRIAGE SYSTEM"
+            : "ORIGINAL TRIAGE SYSTEM");
 
-            int waitingTime = currentTime - p.arrivalTime;
-            totalWaiting += waitingTime;
+        System.out.println("-------------------------");
 
-            System.out.println(p.name
-                + " | Severity: " + p.severity
-                + " | Waiting: " + waitingTime);
+        while (!waiting.isEmpty() || !available.isEmpty()) {
 
-            currentTime++;
-        }
+            for (int i = waiting.size() - 1; i >= 0; i--) {
+                Patient p = waiting.get(i);
 
-        System.out.println("Average waiting time: "
-            + (double) totalWaiting / 8);
-    }
+                if (p.arrivalTime <= time) {
+                    available.add(p);
+                    waiting.remove(i);
+                }
+            }
 
-    static void runRedesigned() {
-        List<Patient> waitingPatients = createPatients();
+            if (available.isEmpty()) {
+                time++;
+                continue;
+            }
 
-        System.out.println("\nREDESIGNED TRIAGE SYSTEM");
-        System.out.println("------------------------");
+            final int currentTime = time;
 
-        int currentTime = 0;
-        int totalWaiting = 0;
+            available.sort((p1, p2) -> {
 
-        while (!waitingPatients.isEmpty()) {
+                // Critical patients always receive first priority.
+                if (p1.severity == 1 && p2.severity != 1)
+                    return -1;
 
-            PriorityQueue<Patient> queue =
-                new PriorityQueue<>((p1, p2) -> {
+                if (p2.severity == 1 && p1.severity != 1)
+                    return 1;
 
-                    int wait1 = currentTimeValue - p1.arrivalTime;
-                    int wait2 = currentTimeValue - p2.arrivalTime;
+                int priority1 = p1.severity;
+                int priority2 = p2.severity;
 
-                    // Critical emergencies always come first.
-                    boolean critical1 = p1.severity == 1;
-                    boolean critical2 = p2.severity == 1;
+                if (aging) {
+                    int wait1 = currentTime - p1.arrivalTime;
+                    int wait2 = currentTime - p2.arrivalTime;
 
-                    if (critical1 != critical2) {
-                        return critical1 ? -1 : 1;
-                    }
+                    priority1 = Math.max(2,
+                        p1.severity - wait1 / 2);
 
-                    int effective1 = Math.max(
-                        1, p1.severity - wait1 / 2);
+                    priority2 = Math.max(2,
+                        p2.severity - wait2 / 2);
+                }
 
-                    int effective2 = Math.max(
-                        1, p2.severity - wait2 / 2);
+                int result = Integer.compare(priority1, priority2);
 
-                    int result = Integer.compare(
-                        effective1, effective2);
+                if (result == 0) {
+                    result = Integer.compare(
+                        p1.arrivalOrder, p2.arrivalOrder);
+                }
 
-                    if (result == 0) {
-                        result = Integer.compare(
-                            p1.arrivalOrder, p2.arrivalOrder);
-                    }
+                return result;
+            });
 
-                    return result;
-                });
+            Patient selected = available.remove(0);
 
-            queue.addAll(waitingPatients);
+            int patientWaiting = time - selected.arrivalTime;
 
-            Patient selected = queue.poll();
-
-            int waitingTime = currentTime - selected.arrivalTime;
-            totalWaiting += waitingTime;
+            totalWaiting += patientWaiting;
+            maximumWaiting = Math.max(
+                maximumWaiting, patientWaiting);
 
             System.out.println(selected.name
                 + " | Severity: " + selected.severity
-                + " | Waiting: " + waitingTime);
+                + " | Waiting: " + patientWaiting);
 
-            waitingPatients.remove(selected);
-            currentTime++;
-            currentTimeValue = currentTime;
+            time++;
         }
 
         System.out.println("Average waiting time: "
-            + (double) totalWaiting / 8);
+            + (double) totalWaiting / 10);
+
+        System.out.println("Maximum waiting time: "
+            + maximumWaiting);
     }
 
-    static int currentTimeValue = 0;
-
     public static void main(String[] args) {
-        runOriginal();
-        runRedesigned();
+        runSystem(false);
+        runSystem(true);
     }
 }
