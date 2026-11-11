@@ -74,3 +74,37 @@ For this experiment, the registration number is used as the unique student ident
 ## 9. Conclusion
 
 The experiment demonstrates that hashCode() and equals() must follow the Java contract. Correct implementation prevents duplicate Student objects in HashSet and supports reliable collection operations.
+
+## 10. Experimental Results
+
+### Test 1 – Unique Students
+
+Two students with different registration numbers were inserted.
+
+Result: HashSet stored both students successfully.
+
+### Test 2 – Duplicate Students
+
+Two Student objects with the same registration number were inserted.
+
+Before implementing hashCode(), the result depended on hash-code collisions.
+
+After implementing hashCode(), HashSet correctly identified the duplicate and stored only one copy.
+
+### Test 3 – TreeSet Comparator
+
+Two students had different registration numbers but the same name.
+
+The TreeSet comparator compared only student names. Therefore, it treated both students as equal and stored only one.
+
+## 11. Final Observation
+
+- equals() compares students using their registration numbers.
+- hashCode() generates a hash based on the same registration number.
+- Equal objects must always have equal hash codes.
+- TreeSet uses its comparator to determine ordering and uniqueness.
+- Immutable identifying fields help prevent collection-related errors.
+
+## 12. Final Conclusion
+
+The experiment confirms that hashCode() and equals() must be implemented consistently for reliable HashSet behaviour. A suitable comparator is also essential when using TreeSet.
